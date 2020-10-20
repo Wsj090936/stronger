@@ -1,0 +1,10 @@
+<configuration>
+
+    <dataSource>
+        <property name="driver" value="com.mysql.jdbc.driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql:///mybatis"></property>
+        <property name="userName" value="root"></property>
+        <property name="password" value="090936"></property>
+    </dataSource>
+
+</configuration>
