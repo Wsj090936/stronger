@@ -1,0 +1,10 @@
+<mapper namespace = "user">
+
+        <select id="selectList" resultType = "com.wsj.stronger.UserDO">
+            SELECT * FROM User
+        </select>
+
+    <select id = "selectOne" resultType = "com.wsj.stronger.UserDO" parameterType = "com.wsj.stronger.UserDO">
+            SELECT * FROM User WHERE id = #{id} AND userName = #{userName}
+    </select>
+</mapper>

@@ -5,8 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.wsj.stronger</groupId>
-    <artifactId>batis</artifactId>
+    <artifactId>batis_test</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.wsj.stronger</groupId>
+            <artifactId>batis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
