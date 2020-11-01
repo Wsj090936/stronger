@@ -18,6 +18,9 @@ public class SqlSessionFactoryBuilder {
         XmlConfigBuilder xmlConfigBuilder = new XmlConfigBuilder();
         // 解析SqlMapConfig.xml 与 mapper.xml
         Configration configration = xmlConfigBuilder.parseConfig(inputStream);
-        return null;
+        // 创建SqlSessionFactory
+        DefaultSqlSessionFactory defaultSqlSessionFactory = new DefaultSqlSessionFactory(configration);
+
+        return defaultSqlSessionFactory;
     }
 }
