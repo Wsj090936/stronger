@@ -7,22 +7,30 @@ package com.wsj.stronger.batis.domain;
  */
 
 public class UserDO {
-    private Long id;
-    private String name;
+    private Integer id;
+    private String userName;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String name) {
+        this.userName = name;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDO{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                '}';
     }
 }
