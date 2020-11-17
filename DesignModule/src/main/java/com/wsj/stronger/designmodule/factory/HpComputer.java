@@ -1,7 +1,7 @@
 package com.wsj.stronger.designmodule.factory;
 
 /**
- * TODO
+ * 电脑类型：hp
  *
  * @Author jiahao
  * @Date 2020/11/17 9:12
