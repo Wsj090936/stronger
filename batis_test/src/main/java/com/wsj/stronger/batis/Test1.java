@@ -44,4 +44,22 @@ public class Test1 {
         UserDO userDO1 = userDao.queryByCondition(userDO);
         System.out.println(userDO1);
     }
+    @Test
+    public void test3() throws Exception {
+        InputStream resourcesAsStream = org.apache.ibatis.io.Resources.getResourceAsStream("sqlMapConfig.xml");
+        org.apache.ibatis.session.SqlSessionFactory sqlSessionFactory = new org.apache.ibatis.session.SqlSessionFactoryBuilder().build(resourcesAsStream);
+        org.apache.ibatis.session.SqlSession sqlSession = sqlSessionFactory.openSession();
+        sqlSession.selectList("namespace.id");
+    }
+
+    @Test
+    public void test4() throws Exception {
+        InputStream resourcesAsStream = org.apache.ibatis.io.Resources.getResourceAsStream("sqlMapConfig.xml");
+        org.apache.ibatis.session.SqlSessionFactory sqlSessionFactory = new org.apache.ibatis.session.SqlSessionFactoryBuilder().build(resourcesAsStream);
+        org.apache.ibatis.session.SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        // 其实是调用代理对象的invoke方法
+        List<UserDO> all = mapper.findAll();
+    }
+
 }

@@ -4,6 +4,7 @@ import com.wsj.stronger.spring.dao.AccountDao;
 import com.wsj.stronger.spring.factory.BeanFactory;
 import com.wsj.stronger.spring.pojo.Account;
 import com.wsj.stronger.spring.service.TransferService;
+import com.wsj.stronger.spring.utils.TransactionManager;
 
 /**
  * @author 应癫
@@ -28,10 +29,10 @@ public class TransferServiceImpl implements TransferService {
 
     @Override
     public void transfer(String fromCardNo, String toCardNo, int money) throws Exception {
-
-        /*try{
-            // 开启事务(关闭事务的自动提交)
-            TransactionManager.getInstance().beginTransaction();*/
+        // 开启事务
+        TransactionManager instance = TransactionManager.getInstance();
+        instance.begainTransaction();
+        try {
 
             Account from = accountDao.queryAccountByCardNo(fromCardNo);
             Account to = accountDao.queryAccountByCardNo(toCardNo);
@@ -42,19 +43,17 @@ public class TransferServiceImpl implements TransferService {
             accountDao.updateAccountByCardNo(to);
             int c = 1/0;
             accountDao.updateAccountByCardNo(from);
+            // 提交事务
+            instance.commit();
+        }catch (Exception ex){
+            ex.printStackTrace();
+            // 回滚
+            instance.rollback();
+            throw ex;
+        }
 
-        /*    // 提交事务
 
-            TransactionManager.getInstance().commit();
-        }catch (Exception e) {
-            e.printStackTrace();
-            // 回滚事务
-            TransactionManager.getInstance().rollback();
 
-            // 抛出异常便于上层servlet捕获
-            throw e;
-
-        }*/
 
 
 

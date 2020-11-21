@@ -6,6 +6,7 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -52,9 +53,16 @@ public class BeanFactory {
                 String name = element.attributeValue("name");
                 String ref = element.attributeValue("ref");
                 Element parent = element.getParent(); // 获取其父节点
-                String id = parent.attributeValue("id");
-                Object obj = map.get(id);// 拿到第1步骤初始化的对象
-                Method method = obj.getClass().getMethod("set" + name);
+                String parentId = parent.attributeValue("id");
+                Object obj = map.get(parentId);// 拿到第1步骤初始化的对象
+                Method[] methods = obj.getClass().getMethods();
+                for (int j = 0; j < methods.length; j++) {
+                    Method method = methods[j];
+                    if(method.getName().equalsIgnoreCase("set" + name)){
+                        method.invoke(obj,map.get(ref));// 调用set方法，设置值
+                    }
+                }
+                map.put(parentId,obj);// 完后将该类更新
             }
         } catch (DocumentException e) {
             e.printStackTrace();
@@ -64,7 +72,7 @@ public class BeanFactory {
             e.printStackTrace();
         } catch (InstantiationException e) {
             e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }
