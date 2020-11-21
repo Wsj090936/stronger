@@ -50,6 +50,7 @@ public class TransferServiceImpl implements TransferService {
             // 回滚
             instance.rollback();
             throw ex;
+
         }
 
 
