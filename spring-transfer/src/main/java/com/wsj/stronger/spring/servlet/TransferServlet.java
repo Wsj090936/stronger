@@ -1,6 +1,7 @@
 package com.wsj.stronger.spring.servlet;
 
 import com.wsj.stronger.spring.factory.BeanFactory;
+import com.wsj.stronger.spring.factory.ProxyFactory;
 import com.wsj.stronger.spring.utils.JsonUtils;
 import com.wsj.stronger.spring.pojo.Result;
 import com.wsj.stronger.spring.service.TransferService;
@@ -20,7 +21,11 @@ public class TransferServlet extends HttpServlet {
 
     // 1. 实例化service层对象
     //private TransferService transferService = new TransferServiceImpl();
-    private TransferService transferService = (TransferService) BeanFactory.getBean("transferService");
+
+    private ProxyFactory proxyFactory = (ProxyFactory) BeanFactory.getBean("proxyFactory");
+
+    private TransferService transferService = (TransferService) proxyFactory.getJdkProxy(BeanFactory.getBean("transferService"));
+
 
 
     @Override

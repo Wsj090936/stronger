@@ -14,11 +14,11 @@ public class ConnectionUtils {
     private ConnectionUtils(){
 
     }
-    private static ConnectionUtils connectionUtils = new ConnectionUtils();
-
-    public static ConnectionUtils getInstance(){
-        return connectionUtils;
-    }
+//    private static ConnectionUtils connectionUtils = new ConnectionUtils();
+//
+//    public static ConnectionUtils getInstance(){
+//        return connectionUtils;
+//    }
 
     // 当前线程唯一绑定的数据库连接
     private ThreadLocal<Connection> threadLocal = new ThreadLocal<>();

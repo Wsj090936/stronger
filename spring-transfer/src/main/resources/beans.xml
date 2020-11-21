@@ -3,10 +3,19 @@
 <beans>
     <!--id标识对象，class是类的全限定类名-->
     <bean id="accountDao" class="com.wsj.stronger.spring.dao.impl.JdbcTemplateDaoImpl">
+
     </bean>
     <bean id="transferService" class="com.wsj.stronger.spring.service.impl.TransferServiceImpl">
         <property name = "AccountDao" ref = "accountDao"></property>
     </bean>
+    <bean id="connectionUtils" class="com.wsj.stronger.spring.utils.ConnectionUtils"/>
 
+    <bean id="transactionManager" class="com.wsj.stronger.spring.utils.TransactionManager">
+        <property name="ConnectionUtils" ref="connectionUtils"/>
+    </bean>
+
+    <bean id="proxyFactory" class="com.wsj.stronger.spring.factory.ProxyFactory">
+        <property name="TransactionManager" ref="transactionManager"/>
+    </bean>
 
 </beans>

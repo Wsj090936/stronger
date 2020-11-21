@@ -2,22 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4abe0cec-11c1-466b-a8e0-0cc92ca5e9ec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../DesignModule/src/main/java/com/wsj/stronger/designmodule/proxy/SaleItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DesignModule/src/main/java/com/wsj/stronger/designmodule/proxy/SaleItemImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DesignModule/src/main/java/com/wsj/stronger/designmodule/proxy/TestProxy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DesignModule/src/main/java/com/wsj/stronger/designmodule/proxy/dynamicproxy/TestDynamicProxy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DesignModule/src/main/java/com/wsj/stronger/designmodule/proxy/dynamicproxy/factory/ProxyFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DesignModule/src/main/java/com/wsj/stronger/designmodule/proxy/staticproxy/SaleItemStaticProxy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/ConnectionUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/TransactionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/factory/ProxyFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../batis_test/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../batis_test/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../batis_test/src/main/java/com/wsj/stronger/batis/Test1.java" beforeDir="false" afterPath="$PROJECT_DIR$/../batis_test/src/main/java/com/wsj/stronger/batis/Test1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/dao/impl/JdbcAccountDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/dao/impl/JdbcAccountDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/factory/BeanFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/factory/BeanFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/service/impl/TransferServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/service/impl/TransferServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/DruidUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/DruidUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/servlet/TransferServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/servlet/TransferServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/ConnectionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/ConnectionUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/TransactionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/TransactionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/resources/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/resources/beans.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -215,10 +207,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-12" />
-    <option name="y" value="-12" />
-    <option name="width" value="1944" />
-    <option name="height" value="1044" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="1943" />
+    <option name="height" value="1043" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />

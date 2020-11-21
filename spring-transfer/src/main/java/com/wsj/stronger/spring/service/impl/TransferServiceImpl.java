@@ -19,7 +19,13 @@ public class TransferServiceImpl implements TransferService {
 //    private AccountDao accountDao = (AccountDao) BeanFactory.getBean("accountDao");
     // 最佳状态
     private AccountDao accountDao;
-    // 构造函数传值/set方法传值
+//    private TransactionManager transactionManager;
+
+//    public void setTransactionManager(TransactionManager transactionManager) {
+//        this.transactionManager = transactionManager;
+//    }
+
+// 构造函数传值/set方法传值
 
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
@@ -27,12 +33,13 @@ public class TransferServiceImpl implements TransferService {
 
 
 
+
     @Override
     public void transfer(String fromCardNo, String toCardNo, int money) throws Exception {
         // 开启事务
-        TransactionManager instance = TransactionManager.getInstance();
-        instance.begainTransaction();
-        try {
+
+//        transactionManager.begainTransaction();
+//        try {
 
             Account from = accountDao.queryAccountByCardNo(fromCardNo);
             Account to = accountDao.queryAccountByCardNo(toCardNo);
@@ -43,15 +50,15 @@ public class TransferServiceImpl implements TransferService {
             accountDao.updateAccountByCardNo(to);
             int c = 1/0;
             accountDao.updateAccountByCardNo(from);
-            // 提交事务
-            instance.commit();
-        }catch (Exception ex){
-            ex.printStackTrace();
-            // 回滚
-            instance.rollback();
-            throw ex;
-
-        }
+//            // 提交事务
+//            transactionManager.commit();
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//            // 回滚
+//            transactionManager.rollback();
+//            throw ex;
+//
+//        }
 
 
 
