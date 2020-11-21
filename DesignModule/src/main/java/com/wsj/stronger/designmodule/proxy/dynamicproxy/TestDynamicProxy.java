@@ -12,10 +12,14 @@ import com.wsj.stronger.designmodule.proxy.dynamicproxy.factory.ProxyFactory;
  */
 public class TestDynamicProxy {
 
+
     public static void main(String[] args) {
         ProxyFactory proxyFactory = ProxyFactory.getInstance();
         SaleItem saleItem = new SaleItemImpl();
-        SaleItem jdkProxy = (SaleItem) proxyFactory.getJdkProxy(saleItem);
+        SaleItem jdkProxy =  proxyFactory.getJdkProxy(saleItem);
         jdkProxy.sale();
+
+        SaleItem cglibProxy = proxyFactory.getCglibProxy(saleItem);
+        cglibProxy.sale();
     }
 }

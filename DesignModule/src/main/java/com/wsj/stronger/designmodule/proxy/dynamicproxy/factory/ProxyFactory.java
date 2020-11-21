@@ -1,5 +1,9 @@
 package com.wsj.stronger.designmodule.proxy.dynamicproxy.factory;
 
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -37,6 +41,20 @@ public class ProxyFactory {
             }
 
         });
-        return proxyInstance;
+        return  proxyInstance;
+    }
+
+    public <T> T getCglibProxy(T object){
+        @SuppressWarnings("unchecked")
+        T o = (T) Enhancer.create(object.getClass(), new MethodInterceptor() {
+            @Override
+            public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+                System.out.println("我来当你这个店的代理，不过要给我工资");
+                Object result = method.invoke(object, objects);
+                System.out.println("拿到工资了，一共3000元");
+                return result;
+            }
+        });
+        return o;
     }
 }
