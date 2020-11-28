@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+<!--    <bean id="logUtils" class="com.wsj.stronger.LogUtils">    </bean>-->
+<!--    <bean id="dogBean" class="com.wsj.stronger.DogBean"></bean>-->
+<!--        <aop:config>-->
+<!--            <aop:aspect id="logAspect" ref="logUtils">-->
+<!--                    &lt;!&ndash;      切入点          &ndash;&gt;-->
+<!--                    <aop:pointcut id="p1" expression="execution(public void com.wsj.stronger.DogBean.*(..))"/>-->
+<!--                    &lt;!&ndash; 方位信息，要编制的方法&ndash;&gt;-->
+<!--&lt;!&ndash;                    <aop:before method="before" pointcut-ref="p1"/>&ndash;&gt;-->
+<!--                    <aop:around method="around" pointcut-ref="p1"/>-->
+<!--            </aop:aspect>-->
+<!--        </aop:config>-->
+    <context:component-scan base-package="com.wsj.stronger"/>
+    <aop:aspectj-autoproxy />
+</beans>

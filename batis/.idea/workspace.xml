@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4abe0cec-11c1-466b-a8e0-0cc92ca5e9ec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/factory/ProxyFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/dao/impl/JdbcAccountDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/dao/impl/JdbcAccountDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/service/impl/TransferServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/service/impl/TransferServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/servlet/TransferServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/servlet/TransferServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/ConnectionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/ConnectionUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/TransactionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/java/com/wsj/stronger/spring/utils/TransactionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring-transfer/src/main/resources/beans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-transfer/src/main/resources/beans.xml" afterDir="false" />
-    </list>
+    <list default="true" id="4abe0cec-11c1-466b-a8e0-0cc92ca5e9ec" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -363,7 +354,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24291497" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
