@@ -1,6 +1,8 @@
 package com.wsj;
 
+import com.wsj.stronger.annotions.AutoWired;
 import com.wsj.stronger.annotions.Controller;
+import com.wsj.stronger.annotions.RequestMapping;
 import com.wsj.stronger.annotions.Service;
 
 import javax.servlet.ServletConfig;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.*;
 
@@ -26,6 +30,8 @@ public class MyDispatcherServlet extends HttpServlet {
     List<String> classNames = new ArrayList<String>();
 
     Map<String,Object> IOCMap = new HashMap<String, Object>();
+
+    Map<String,Method> handlerMapping = new HashMap<String, Method>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -57,9 +63,64 @@ public class MyDispatcherServlet extends HttpServlet {
 
     private void initHandlerMapping() {
 
+        // 创建HandlerMapping
+        if(IOCMap.isEmpty()){
+            return;
+        }
+        for (Map.Entry<String, Object> entry : IOCMap.entrySet()) {
+            Object object = entry.getValue();
+            Class<?> clazz = object.getClass();
+            if(clazz.isAnnotationPresent(Controller.class)){
+                // 没有Controller，跳过
+                continue;
+            }
+            StringBuilder baseUrl = new StringBuilder();
+            if(clazz.isAnnotationPresent(RequestMapping.class)){
+                RequestMapping annotation = clazz.getAnnotation(RequestMapping.class);
+                baseUrl = new StringBuilder(annotation.value());
+            }
+            // 再取方法
+            Method[] methods = clazz.getMethods();
+            for (Method method : methods) {
+                if(!method.isAnnotationPresent(RequestMapping.class)){
+                    continue;
+                }
+                // 被RequestMapping依赖 就处理
+                RequestMapping annotation = method.getAnnotation(RequestMapping.class);
+                baseUrl.append(annotation.value());
+                handlerMapping.put(baseUrl.toString(),method);
+            }
+        }
+
     }
 
     private void doWired() {
+        //
+        if(IOCMap.isEmpty()){
+            return;
+        }
+        for (Map.Entry<String, Object> entry : IOCMap.entrySet()) {
+            Object value = entry.getValue();
+            Field[] fields = value.getClass().getFields();
+            // 遍历所有的属性，进行注入
+            for (Field field : fields) {
+                if(field.isAnnotationPresent(AutoWired.class)){
+                    // 有被注解标记才注入
+                    AutoWired annotation = field.getAnnotation(AutoWired.class);
+                    String beanName = annotation.value();
+                    if(beanName == null || beanName.length() <= 0){
+                        beanName = field.getType().getName();
+                    }
+                    // 注入
+                    field.setAccessible(true);
+                    try {
+                        field.set(value,IOCMap.get(beanName));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
 
     }
 
