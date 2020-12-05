@@ -1,9 +1,11 @@
-package com.wsj;
+package com.wsj.stronger;
 
 import com.wsj.stronger.annotions.AutoWired;
 import com.wsj.stronger.annotions.Controller;
 import com.wsj.stronger.annotions.RequestMapping;
 import com.wsj.stronger.annotions.Service;
+import com.wsj.stronger.handler.Handler;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,9 +16,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -31,8 +36,8 @@ public class MyDispatcherServlet extends HttpServlet {
 
     Map<String,Object> IOCMap = new HashMap<String, Object>();
 
-    Map<String,Method> handlerMapping = new HashMap<String, Method>();
-
+    //Map<String,Method> handlerMapping = new HashMap<String, Method>();
+    List<Handler> handlerMapping = new ArrayList<>();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
@@ -40,7 +45,61 @@ public class MyDispatcherServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        // 根据URI获取对应的method，进行调用执行
+        Handler handler = getHandler(req);
+        if(handler == null){
+            resp.getWriter().write("404 NOT FUND");
+
+            return;
+        }
+
+        // 获取方法
+        Method method = handler.getMethod();
+        Class<?>[] parameterTypes = method.getParameterTypes();// 数组长度就是要传入的参数数组长度
+        Object[] param = new Object[parameterTypes.length];
+
+        // 前端传入的参数
+        Map<String, String[]> parameterMap = req.getParameterMap();
+        Map<String, Integer> paramMapping = handler.getParamMapping();
+        for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+            String paramValue = StringUtils.join(entry.getValue(),",");
+            if(!paramMapping.containsKey(entry.getKey())){// 参数值和方法参数名不匹配
+                continue;
+            }
+            Integer index = paramMapping.get(entry.getKey());// 参数所在的位置
+            param[index] = paramValue;
+        }
+        if(paramMapping.containsKey(req.getClass().getSimpleName())){
+            Integer reqIndex = handler.getParamMapping().get(req.getClass().getSimpleName());
+            param[reqIndex] = req;
+        }
+        if(paramMapping.containsKey(resp.getClass().getSimpleName())){
+            Integer respIndex = paramMapping.get(resp.getClass().getSimpleName());
+            param[respIndex] = resp;
+        }
+        // 执行
+        try {
+            Object invoke = handler.getMethod().invoke(handler.getController(), param);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Handler getHandler(HttpServletRequest req) {
+        if(handlerMapping.isEmpty()){
+            return null;
+        }
+        String requestURI = req.getRequestURI();
+        for (Handler handler : handlerMapping) {
+            boolean matches = handler.getPattern().matcher(requestURI).matches();
+            if(!matches){
+                continue;
+            }
+            return handler;
+        }
+        return null;
     }
 
     @Override
@@ -59,6 +118,7 @@ public class MyDispatcherServlet extends HttpServlet {
         // 5、构造HalderMapping，构造url与处理Method的关系
         initHandlerMapping();
         // 执行 返回
+        System.out.println("初始化完成");
     }
 
     private void initHandlerMapping() {
@@ -70,7 +130,7 @@ public class MyDispatcherServlet extends HttpServlet {
         for (Map.Entry<String, Object> entry : IOCMap.entrySet()) {
             Object object = entry.getValue();
             Class<?> clazz = object.getClass();
-            if(clazz.isAnnotationPresent(Controller.class)){
+            if(!clazz.isAnnotationPresent(Controller.class)){
                 // 没有Controller，跳过
                 continue;
             }
@@ -88,7 +148,21 @@ public class MyDispatcherServlet extends HttpServlet {
                 // 被RequestMapping依赖 就处理
                 RequestMapping annotation = method.getAnnotation(RequestMapping.class);
                 baseUrl.append(annotation.value());
-                handlerMapping.put(baseUrl.toString(),method);
+//                handlerMapping.put(baseUrl.toString(),method);
+                Handler handler = new Handler(entry.getValue(), Pattern.compile(baseUrl.toString()),method);
+
+                Parameter[] parameters = method.getParameters();
+                for (int i = 0; i < parameters.length; i++) {
+                    Parameter parameter = parameters[i];
+                    if(parameter.getType() == HttpServletRequest.class || parameter.getType() == HttpServletResponse.class){
+                        handler.getParamMapping().put(parameter.getType().getSimpleName(),i);// request与response单独
+                    }else {
+                        handler.getParamMapping().put(parameter.getName(),i);
+
+                    }
+                }
+
+                handlerMapping.add(handler);
             }
         }
 
@@ -101,7 +175,7 @@ public class MyDispatcherServlet extends HttpServlet {
         }
         for (Map.Entry<String, Object> entry : IOCMap.entrySet()) {
             Object value = entry.getValue();
-            Field[] fields = value.getClass().getFields();
+            Field[] fields = value.getClass().getDeclaredFields();
             // 遍历所有的属性，进行注入
             for (Field field : fields) {
                 if(field.isAnnotationPresent(AutoWired.class)){
@@ -174,15 +248,16 @@ public class MyDispatcherServlet extends HttpServlet {
     }
 
     private void doScan(String packageName) {
-        URL resource = this.getClass().getClassLoader().getResource("/" + packageName.replaceAll("\\.", "/"));
-        File file = new File(resource.getFile());
+        String s = packageName.replaceAll("\\.", "/");
+        String s1 = this.getClass().getClassLoader().getResource("").getPath() + s;
+        File file = new File(s1);
         File[] files = file.listFiles();
         for (File eachFile : files) {
             if(eachFile.isDirectory()){
                 // 递归
                 doScan(packageName + "." + eachFile.getName());
             }else if(eachFile.getName().endsWith(".class")){
-                String className = packageName + "." + eachFile.getName().replaceAll(".c;ass","");
+                String className = packageName + "." + eachFile.getName().replaceAll(".class","");
                 classNames.add(className);
             }
         }

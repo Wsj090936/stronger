@@ -1,7 +1,8 @@
 com\wsj\stronger\service\DemoService.class
+com\wsj\stronger\handler\Handler.class
 com\wsj\stronger\annotions\AutoWired.class
 com\wsj\stronger\annotions\Service.class
-com\wsj\MyDispatcherServlet.class
+com\wsj\stronger\MyDispatcherServlet.class
 com\wsj\stronger\annotions\Controller.class
 com\wsj\stronger\stronger.class
 com\wsj\stronger\service\DemoServiceImpl.class

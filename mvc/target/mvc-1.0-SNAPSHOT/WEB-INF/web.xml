@@ -7,7 +7,7 @@
 
   <servlet>
     <servlet-name>myDispatcher</servlet-name>
-    <servlet-class>com.wsj.stronger.MyDispatcherServlet</servlet-class>
+    <servlet-class>com.wsj.MyDispatcherServlet</servlet-class>
     <init-param>
       <param-name>configParamLocation</param-name>
       <param-value>applicationContext.properties</param-value>

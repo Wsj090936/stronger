@@ -7,6 +7,8 @@ import com.wsj.stronger.service.DemoService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 
 /**
  * TODO
@@ -23,7 +25,9 @@ public class DemoContrpller {
 
     @RequestMapping("/getName")
     public String getName(HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest,String name){
+        System.out.println("+++++++++++++++=");
         return demoService.get(name);
     }
+
 
 }
